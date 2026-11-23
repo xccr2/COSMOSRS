@@ -1,9 +1,9 @@
 # Salasõna andmebaasis
-**Debian või Ubuntu · 150 minutit praktilist tööd + kuni 30 minutit varuaega**
+**Debian või Ubuntu**
 
 Loo Marile ja Jürile sama väljamõeldud salasõna. Mõlema konto jaoks valid ise uue soola, arvutad räsi ja salvestad tulemuse MariaDB-sse. Eraldi katses krüpteerid Mari salasõna nii, et seda saab võtmega avada. Lõpus kontrollib programm sinu salvestatud andmeid. Koodi kirjutada pole vaja.
 
-## 1. Ava labor (10 min)
+## 1. Ava labor
 Paki ZIP lahti, ava terminal kaustas **praktikum** ja käivita `./lab start`. Oota teadet „Labor on valmis”. Vali ainult selle harjutuse jaoks salasõna, mida mäletad tunni lõpuni. Kasuta mõlema konto ja esimese kuue ülesande jaoks täpselt sama salasõna. Tippimisel salasõna ekraanile ei ilmu.
 
 ## 2. Krüpteeri salasõna ja salvesta tulemus (15 min)
@@ -16,14 +16,14 @@ Paki ZIP lahti, ava terminal kaustas **praktikum** ja käivita `./lab start`. Oo
 
 Krüpteerimisvõti luuakse labori esimesel käivitamisel ja seda hoitakse MongoDB-st eraldi. Kontrollprogramm avab salvestatud krüptogrammi sama võtmega. See kirje on mõeldud krüpteerimise harjutamiseks.
 
-## 3. Loo kaks soola ja arvuta räsid (20 min)
+## 3. Loo kaks soola ja arvuta räsid
 1. Käivita terminalis `openssl rand -hex 16`. Kopeeri 32 märgist koosnev tulemus oma märkmetesse pealkirja **Mari sool** alla.
 2. Käivita `./lab rasi`. Kleebi Mari sool ja sisesta katsesalasõna. Kopeeri 64-märgiline tulemus märkmetesse pealkirja **Mari räsi** alla.
 3. Korda mõlemat sammu Jüri jaoks. Genereeri uus sool ja sisesta sama salasõna. Hoia kummagi kasutaja sool ja räsi paaris.
 
 Võrdle tulemusi. Milline sisend muutus? Sool on avalik juhuarv. Labori räsitööriist kasutab salasõna ja soola koos scrypt-algoritmiga. Soola läheb uuesti vaja, kui kasutaja järgmisel korral sisse logib.
 
-## 4. Salvesta soolad ja räsid MariaDB-sse (20 min)
+## 4. Salvesta soolad ja räsid MariaDB-sse
 Ava `./lab sql`. Asenda neli suurtähtedega kohatäitjat oma väärtustega. Kleebi täidetud käsk MariaDB aknasse koos lõpus oleva semikooloniga.
 
     REPLACE INTO harjutus (nimi, sool, rasi) VALUES
@@ -36,7 +36,7 @@ Kontrolli mõlemat rida. Päring näitab ainult räsi algust.
 
 Kirjuta üles, kas räsialgused on erinevad. MariaDB-st väljumiseks sisesta `exit`. Kui hiljem avastad vea, saad parandatud REPLACE-käsu uuesti sisestada.
 
-## 5. Märgi graafi Mari lugemisõigus (10 min)
+## 5. Märgi graafi Mari lugemisõigus
 Ava `./lab graaf`. Lisa seos järgmise käsuga.
 
     MERGE (k:Konto {nimi:'mari'}) MERGE (f:Fail {nimi:'aruanne'}) MERGE (k)-[:LOEB]->(f);
@@ -51,7 +51,7 @@ Käivita kontroll veel kord ja sisesta meelega vale salasõna. Millised read jä
 1. Kuidas sai kontrollprogramm kindlaks teha, et MariaDB-s oleva räsiga sobib sinu salasõna?
 2. Mida saab MongoDB krüptogrammi ja õige võtmega teha, mida MariaDB räsi ja soolaga teha ei saa?
 
-## 7. Leia ja paranda vigane sool (25 min)
+## 7. Leia ja paranda vigane sool
 
 Mari teatab, et tema salasõna lakkas töötamast pärast kontoandmete parandamist. Tekita see olukord oma laboris. Hoia alles ülesande 3 märkmed, sest sealt leiad Mari õige soola.
 
@@ -63,7 +63,7 @@ Mari teatab, et tema salasõna lakkas töötamast pärast kontoandmete parandami
 3. Välju käsuga `exit`. Käivita `./lab kontroll` algse katsesalasõnaga. Märgi üles tegelikud vearead. Miks näitab Mari MongoDB proovikirje ikka KORRAS?
 4. Taasta MariaDB-s sama UPDATE-käsuga Mari algne sool. Kontrolli uuesti. Kirjuta ühe lausega, milline tulemus kinnitab, et ka algne räsi jäi terveks.
 
-## 8. Vaheta ainult Jüri salasõna (25 min)
+## 8. Vaheta ainult Jüri salasõna
 
 Jüri valib uue katsesalasõna. Mari jätkab algsega. Kasuta ülesandest 3 tuttavaid käske, et luua Jürile värske sool ja arvutada tema uue salasõna räsi. Võrdle uut soola Jüri varasemaga.
 
@@ -75,7 +75,7 @@ Välju käsuga `exit`. Katseta vana salasõna käsuga `./lab kontroll`. See käs
 
 Käivita nüüd `./lab lopukontroll`. Esimese küsimuse juures sisesta Mari algne salasõna ja teise juures Jüri uus salasõna. Otsi kuut rida märkega **KORRAS**. Kui Jüri rida ebaõnnestub, kontrolli, kas kasutasid räsimisel ja salvestamisel sama uut soola.
 
-## 9. Esita katsete tulemused (10 min)
+## 9. Esita katsete tulemused
 
 Lisa ülesande 6 vastustele järgmine tabel. Märgi iga katse juurde tegelikult nähtud tulemus ja selle põhjus.
 
