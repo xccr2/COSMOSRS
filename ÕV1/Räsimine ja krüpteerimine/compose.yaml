@@ -1,0 +1,37 @@
+services:
+  sql:
+    image: mariadb:11.4
+    environment:
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+      MARIADB_DATABASE: lab
+      MARIADB_USER: lab
+      MARIADB_PASSWORD: ${SQL_PASS:?}
+    volumes:
+      - sql-data:/var/lib/mysql
+  mongo:
+    image: mongo:7.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: lab
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS:?}
+    volumes:
+      - mongo-data:/data/db
+  graph:
+    image: neo4j:5.26-community
+    environment:
+      NEO4J_AUTH: neo4j/${GRAPH_PASS:?}
+    volumes:
+      - graph-data:/data
+  app:
+    build: .
+    profiles: [cli]
+    volumes:
+      - keys:/keys
+    environment:
+      SQL_PASS: ${SQL_PASS:?}
+      MONGO_PASS: ${MONGO_PASS:?}
+      GRAPH_PASS: ${GRAPH_PASS:?}
+volumes:
+  keys:
+  sql-data:
+  mongo-data:
+  graph-data:

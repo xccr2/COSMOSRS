@@ -1,0 +1,24 @@
+#!/bin/sh
+set -eu
+cd "$(dirname "$0")"
+if [ ! -f .env ]; then
+  (umask 077; for name in SQL_PASS MONGO_PASS GRAPH_PASS; do
+    printf '%s=%s\n' "$name" "$(python3 -c 'import secrets;print(secrets.token_hex(24))')"
+  done > .env)
+fi
+case "${1:-}" in
+start)
+  docker compose up -d sql mongo graph
+  docker compose build app
+  for i in $(seq 1 45); do
+    if docker compose run --rm -T app init; then echo "Labor on valmis."; exit 0; fi
+    sleep 2
+  done
+  echo "Kontrolli teenuseid käsuga docker compose ps -a" >&2
+  exit 1 ;;
+sql) docker compose exec sql sh -c 'MYSQL_PWD="$MARIADB_PASSWORD" exec mariadb -u lab lab' ;;
+mongo) docker compose exec mongo sh -c 'exec mongosh lab --quiet -u lab -p "$MONGO_INITDB_ROOT_PASSWORD" --authenticationDatabase admin' ;;
+graaf) docker compose exec graph sh -c 'exec cypher-shell -u neo4j -p "${NEO4J_AUTH#*/}"' ;;
+stop) docker compose stop ;;
+*) docker compose run --rm app "$@" ;;
+esac
