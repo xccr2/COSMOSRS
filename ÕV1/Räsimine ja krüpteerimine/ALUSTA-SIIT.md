@@ -6,7 +6,7 @@ Loo Marile ja Jürile sama väljamõeldud salasõna. Mõlema konto jaoks valid i
 ## 1. Ava labor
 Paki ZIP lahti, ava terminal kaustas **praktikum** ja käivita `./lab start`. Oota teadet „Labor on valmis”. Vali ainult selle harjutuse jaoks salasõna, mida mäletad tunni lõpuni. Kasuta mõlema konto ja esimese kuue ülesande jaoks täpselt sama salasõna. Tippimisel salasõna ekraanile ei ilmu.
 
-## 2. Krüpteeri salasõna ja salvesta tulemus (15 min)
+## 2. Krüpteeri salasõna ja salvesta tulemus
 1. Käivita terminalis `./lab krupteeri`. Sisesta Mari katsesalasõna. Kopeeri kogu väljastatud krüptogramm.
 2. Ava MongoDB käsuga `./lab mongo`. Asenda sõna KRÜPTOGRAMM oma tulemusega ning sisesta järgmine käsk. Jäta jutumärgid alles.
 
